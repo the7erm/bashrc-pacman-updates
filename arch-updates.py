@@ -48,16 +48,19 @@ def and_join(_list):
 if time_to_update:
     write_message("Updating cache list ...")
     updates = check_output(["checkupdates"])
-    updates = updates.strip()
     fp = open(CACHE_FILE, "w")
     fp.write(updates)
     fp.close()
 
 if updates is None:
     updates = open(CACHE_FILE, "r").read()
+updates = updates.strip()
 
-packages = updates.split("\n")
-packages_len = len(packages)
+if updates:
+    packages = updates.split("\n")
+    packages_len = len(packages)
+else:
+    packages_len = 0
 
 if packages_len > 0:
     write_message("%d updates.  Packages: %s" % (packages_len, and_join(packages)) )
